@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, StyleSheet } from 'react-native';
+import { Modal, View, StyleSheet, Text, Linking } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/Feather';
 import Button from '../components/Button';
@@ -16,14 +16,69 @@ export default class CameraModal extends React.PureComponent<Props> {
         this.props.onRequestClose(data.uri);
     };
 
+    _openSettings = () => Linking.openURL('app-settings://');
+
+    _renderNotAuthorized = () => {
+        const viewStyle = [styles.camera];
+        viewStyle.push({
+            backgroundColor: '#00BCD4',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: 30
+        });
+
+        const largeIcon = {
+            marginBottom: 20
+        };
+
+        const mutedTextHint = {
+            fontSize: 13,
+            marginVertical: 6
+        };
+
+        const buttonStyle = {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+        };
+        const buttonTextStyle = {
+            color: '#FFF'
+        };
+
+        return (
+            <View style={viewStyle}>
+                <Icon name={'camera-off'} size={60} color={'#FFF'} style={largeIcon} />
+                <Text style={styles.textGuide}>This feature require to access your camera</Text>
+                <Text style={[styles.textGuide, mutedTextHint]}>
+                    Please open Settings and allow this app access camera
+                </Text>
+                <Button
+                    onPress={this._openSettings}
+                    title={'Open settings'}
+                    buttonStyle={buttonStyle}
+                    textStyle={buttonTextStyle}
+                >
+                    <Icon name={'settings'} size={25} color={'#FFF'} />
+                </Button>
+            </View>
+        );
+    };
+
     constructor(props) {
         super(props);
+
+        this.state = {
+            isCameraFront: false
+        };
 
         this._camera = null;
     }
 
     render() {
         const flexRow = { flexDirection: 'row' };
+        const { isCameraFront } = this.state;
+
+        const cameraType = isCameraFront ? RNCamera.Constants.Type.front : RNCamera.Constants.Type.back;
 
         return (
             <Modal
@@ -35,13 +90,19 @@ export default class CameraModal extends React.PureComponent<Props> {
                 <View style={styles.container}>
                     <RNCamera
                         ref={(c) => (this._camera = c)}
-                        type={RNCamera.Constants.Type.back}
+                        type={cameraType}
                         flashMode={RNCamera.Constants.FlashMode.off}
                         permissionDialogTitle={'Permission to use camera'}
                         permissionDialogMessage={'We need your permission to use your camera phone'}
+                        notAuthorizedView={this._renderNotAuthorized()}
                         style={styles.camera}
                     />
                     <View style={styles.buttonGroup}>
+                        <View style={styles.buttonLeft}>
+                            <Button onPress={() => this.setState({ isCameraFront: !isCameraFront })} title={''}>
+                                <Icon name={'refresh-cw'} size={30} color={'red'} />
+                            </Button>
+                        </View>
                         <Button title={''} onPress={this._capture} buttonStyle={styles.button}>
                             <Icon name={'camera'} size={40} color={'#FFF'} />
                         </Button>
@@ -92,5 +153,17 @@ const styles = StyleSheet.create({
         top: 22.5,
         position: 'absolute',
         zIndex: 1
+    },
+
+    buttonLeft: {
+        position: 'absolute',
+        top: 28,
+        left: 20
+    },
+
+    textGuide: {
+        fontSize: 18,
+        color: '#131313',
+        textAlign: 'center'
     }
 });

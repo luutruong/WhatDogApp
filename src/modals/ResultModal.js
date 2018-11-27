@@ -24,12 +24,29 @@ export default class ResultModal extends React.Component<Props> {
 
         const whiteColorStyle = { color: '#FFF' };
 
+        const headerImageSource =
+            result && result.is_dog ? require('../assets/img/congrats.gif') : require('../assets/img/sosad.gif');
+        const imageHeader = <Image source={headerImageSource} style={styles.congratGif} />;
+
+        const frameLeftBannerSource =
+            result && result.is_dog ? require('../assets/img/champagne.png') : require('../assets/img/sad.png');
+        const frameLeftBannerStyles = [styles.frameLeftImg];
+        if (!result || !result.is_dog) {
+            frameLeftBannerStyles.push({
+                top: -20,
+                left: -20
+            });
+        }
+
         return (
             <Modal visible={visible} animationType="slide" transparent={false} onRequestClose={() => onRequestClose()}>
                 <View style={styles.container}>
-                    <Text style={styles.heading}>The result</Text>
+                    {imageHeader}
 
-                    <View style={styles.frame}>{imageComponent}</View>
+                    <View style={styles.frame}>
+                        {imageComponent}
+                        <Image source={frameLeftBannerSource} style={frameLeftBannerStyles} />
+                    </View>
 
                     {result && (
                         <View style={styles.textWrap}>
@@ -57,18 +74,16 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
-    heading: {
-        color: '#FFF',
-        marginTop: 80,
-        fontSize: 30
-    },
+
     frame: {
         marginTop: 30,
         backgroundColor: '#FFF',
         width: 280,
         height: 280,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
     },
     image: {
         width: 260,
@@ -89,5 +104,19 @@ const styles = StyleSheet.create({
     dismiss: {
         marginTop: 20,
         marginBottom: 20
+    },
+
+    frameLeftImg: {
+        width: 80,
+        height: 80,
+        position: 'absolute',
+        top: -40,
+        left: 0,
+        zIndex: 1
+    },
+    congratGif: {
+        width: 240,
+        height: 108,
+        marginTop: 60
     }
 });

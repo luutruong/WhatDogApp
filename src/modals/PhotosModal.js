@@ -9,11 +9,12 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
-    Platform
+    Platform,
+    Linking
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Button from '../components/Button';
-import {PhotoLoader} from "../utils/PhotoLoader";
+import { PhotoLoader } from '../utils/PhotoLoader';
 
 const { width } = Dimensions.get('window');
 
@@ -46,12 +47,28 @@ export default class PhotosModal extends React.PureComponent<Props> {
 
     _listEmpty = () => {
         const smallStyle = { fontSize: 14, marginTop: 5 };
+        const buttonGroup = {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20
+        };
+        const textStyle = { color: '#FFF' };
+
         return (
             <View style={styles.centerEmptySet}>
                 <Text style={styles.textWarning}>There are no photos for display</Text>
                 <Text style={[styles.textWarning, smallStyle]}>
                     This app may not have right permission to access your photo library.
                 </Text>
+                <Button
+                    onPress={() => Linking.openURL('app-settings://')}
+                    title={'Open settings'}
+                    buttonStyle={buttonGroup}
+                    textStyle={textStyle}
+                >
+                    <Icon name={'settings'} size={25} color={'#FFF'} />
+                </Button>
             </View>
         );
     };
@@ -73,29 +90,6 @@ export default class PhotosModal extends React.PureComponent<Props> {
 
         this._endCursor = null;
         this._hasLoaded = false;
-    }
-
-    androidRequestReadStoragePermission() {
-        return new Promise((resolve, reject) => {
-            if (
-                PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE) ===
-                PermissionsAndroid.RESULTS.GRANTED
-            ) {
-                return resolve();
-            }
-
-            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
-                .then((result) => {
-                    if (result === PermissionsAndroid.RESULTS.GRANTED) {
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                })
-                .catch(() => {
-                    reject();
-                });
-        });
     }
 
     loadData(skipFlag: false) {
@@ -202,7 +196,7 @@ const styles = StyleSheet.create({
         height: width / 4
     },
     centerEmptySet: {
-        justifyContent: 'center',
+        marginTop: '40%',
         alignItems: 'center',
         height: '100%',
         paddingHorizontal: 10

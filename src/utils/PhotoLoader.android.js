@@ -1,4 +1,4 @@
-import {CameraRoll, PermissionsAndroid} from 'react-native'
+import { CameraRoll, PermissionsAndroid } from 'react-native';
 
 const getPhotos = (payload) => {
     const requestReadStoragePermission = () => {
