@@ -1,6 +1,6 @@
 {
   "name": "WhatDog",
-  "version": "2.0.181123",
+  "version": "2.0.181127",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
