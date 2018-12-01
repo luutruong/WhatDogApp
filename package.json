@@ -1,6 +1,6 @@
 {
-  "name": "WhatDog",
-  "version": "2.0.181127",
+  "name": "whatdog",
+  "version": "2.0.181201",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -9,8 +9,8 @@
     "android": "react-native run-android"
   },
   "dependencies": {
-    "react": "16.6.1",
-    "react-native": "0.57.5",
+    "react": "^16.6.1",
+    "react-native": "^0.57.7",
     "react-native-admob": "^2.0.0-beta.5",
     "react-native-camera": "^1.4.3",
     "react-native-fast-image": "^5.1.1",
