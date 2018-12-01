@@ -38,8 +38,22 @@ export default class ResultModal extends React.Component<Props> {
             });
         }
 
+        let breedName;
+        if (result) {
+            breedName = (
+                <View style={styles.textWrap}>
+                    <Text style={styles.text}>This is: {result.breed_name}</Text>
+                </View>
+            );
+        }
+
         return (
-            <Modal visible={visible} animationType="slide" transparent={false} onRequestClose={() => onRequestClose()}>
+            <Modal
+                visible={visible}
+                animationType="slide"
+                transparent={false}
+                onRequestClose={() => onRequestClose()}
+            >
                 <View style={styles.container}>
                     {imageHeader}
 
@@ -48,11 +62,7 @@ export default class ResultModal extends React.Component<Props> {
                         <Image source={frameLeftBannerSource} style={frameLeftBannerStyles} />
                     </View>
 
-                    {result && (
-                        <View style={styles.textWrap}>
-                            <Text style={styles.text}>{result.breed_name}</Text>
-                        </View>
-                    )}
+                    {breedName}
 
                     <Button
                         onPress={() => onRequestClose()}

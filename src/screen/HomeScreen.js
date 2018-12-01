@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Alert, Platform } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, Alert, Platform, Linking } from 'react-native';
 import ExampleDogs from '../components/ExampleDogs';
 import CameraModal from '../modals/CameraModal';
 import PhotosModal from '../modals/PhotosModal';
 import Icon from 'react-native-vector-icons/Feather';
 import Button from '../components/Button';
 import Analyzing from '../components/Analyzing';
-import { AdUnits, imgurConfig } from '../Config';
+import {AdUnits, appStore, imgurConfig} from '../Config';
 import ResultModal from '../modals/ResultModal';
 import { AdMobBanner } from 'react-native-admob';
 import RNFS from 'react-native-fs';
@@ -165,6 +165,25 @@ export default class HomeScreen extends React.PureComponent {
         this._photosModal = null;
         this._tempImages = [];
         this._lastImageUri = null;
+    }
+
+    componentDidMount(): void {
+        const randomRequestReview = () => {
+            const randomShowAlert = Math.floor((Math.random() * 3) + 1);
+            if (randomShowAlert === 1) {
+                Alert.alert(
+                    '⭐⭐⭐⭐⭐',
+                    'Give us an review',
+                    [
+                        { text: 'Cancel' },
+                        { text: 'OK', onPress: () => Linking.openURL(appStore.url)}
+                    ]
+                );
+            }
+        };
+
+        // wait for 3 seconds?
+        setTimeout(randomRequestReview, 3000);
     }
 
     render() {

@@ -18,6 +18,15 @@ export const imgurConfig = {
     clientId: 'f33ab45e5b7726e'
 };
 
+export const appStore = Platform.select({
+    ios: {
+        url: 'https://itunes.apple.com/app/id1084109351'
+    },
+    android: {
+        url: 'https://play.google.com/store/apps/details?id=com.truongluu.whatdog'
+    }
+});
+
 const AdUnitExampleId = 'ca-app-pub-3940256099942544/2934735716';
 
 export const AdUnits = Platform.select({
