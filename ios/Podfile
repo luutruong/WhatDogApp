@@ -25,6 +25,8 @@ target 'WhatDog' do
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
+  pod 'RNViewShot', :path => '../node_modules/react-native-view-shot'
+
   target 'WhatDogTests' do
     inherit! :search_paths
     # Pods for testing

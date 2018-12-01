@@ -34,6 +34,8 @@ PODS:
     - React
   - RNVectorIcons (6.1.0):
     - React
+  - RNViewShot (2.5.0):
+    - React
   - SDWebImage/Core (4.4.2)
   - SDWebImage/GIF (4.4.2):
     - FLAnimatedImage (~> 1.0)
@@ -52,6 +54,7 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - RNViewShot (from `../node_modules/react-native-view-shot`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -71,6 +74,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  RNViewShot:
+    :path: "../node_modules/react-native-view-shot"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -82,9 +87,10 @@ SPEC CHECKSUMS:
   react-native-fast-image: cba3d9bf9c2cf8ddb643d887a686c53a5dd90a2c
   RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
   RNVectorIcons: 8c52e1e8da1153613fdef44748e865c25556cb9c
+  RNViewShot: fdf9a64f0621ebc4e7c3392a10d2ffb70a7faee4
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: bd3e56dbd003560b975b7a21499f4c8d507731e9
+PODFILE CHECKSUM: f48892aa1e83467fbc10ecb448f0df3195bec743
 
 COCOAPODS: 1.5.3

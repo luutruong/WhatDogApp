@@ -1,8 +1,10 @@
 import React from 'react';
-import { Modal, View, StyleSheet, Text, Image } from 'react-native';
+import { Modal, View, StyleSheet, Text, Image, CameraRoll, Alert } from 'react-native';
 import { AdUnits, imageSources } from '../Config';
 import Button from '../components/Button';
 import { AdMobBanner } from 'react-native-admob';
+import {captureRef} from "react-native-view-shot";
+import Icon from 'react-native-vector-icons/Feather';
 
 type Props = {
     visible: boolean,
@@ -12,6 +14,36 @@ type Props = {
 };
 
 export default class ResultModal extends React.Component<Props> {
+    _captureScreen = () => {
+        const captureError = () => {
+            Alert.alert(
+                'Failed to capture',
+                'Failed to capture result. Please try again'
+            );
+        };
+
+        captureRef(this._captureViewRef, {
+            format: 'jpg',
+            quality: 0.9
+        })
+            .then(uri => {
+                CameraRoll.saveToCameraRoll(uri, 'photo')
+                    .then(() => {
+                        Alert.alert(
+                            'Photo has saved to your library'
+                        );
+                    })
+                    .catch(captureError);
+            })
+            .catch(captureError);
+    };
+
+    constructor(props) {
+        super(props);
+
+        this._captureViewRef = null;
+    }
+
     render() {
         const { visible, result, source, onRequestClose } = this.props;
 
@@ -57,19 +89,31 @@ export default class ResultModal extends React.Component<Props> {
                 <View style={styles.container}>
                     {imageHeader}
 
-                    <View style={styles.frame}>
+                    <View style={styles.frame} ref={(c) => this._captureViewRef = c}>
                         {imageComponent}
                         <Image source={frameLeftBannerSource} style={frameLeftBannerStyles} />
                     </View>
 
                     {breedName}
 
-                    <Button
-                        onPress={() => onRequestClose()}
-                        title={'Dismiss'}
-                        buttonStyle={styles.dismiss}
-                        textStyle={whiteColorStyle}
-                    />
+                    <View style={styles.buttonGroup}>
+                        <Button
+                            onPress={() => onRequestClose()}
+                            title={'dismiss'}
+                            buttonStyle={styles.buttonWithIcon}
+                            textStyle={whiteColorStyle}
+                        >
+                            <Icon name={'x'} color={'#FFF'} size={27} />
+                        </Button>
+                        <Button
+                            onPress={this._captureScreen}
+                            title={'capture'}
+                            buttonStyle={styles.buttonWithIcon}
+                            textStyle={whiteColorStyle}
+                        >
+                            <Icon name={'camera'} color={'#FFF'} size={27} />
+                        </Button>
+                    </View>
 
                     <AdMobBanner adSize={'banner'} adUnitID={AdUnits.ResultScreen} />
                 </View>
@@ -111,10 +155,6 @@ const styles = StyleSheet.create({
         color: '#3e5441',
         fontSize: 18
     },
-    dismiss: {
-        marginTop: 20,
-        marginBottom: 20
-    },
 
     frameLeftImg: {
         width: 80,
@@ -128,5 +168,18 @@ const styles = StyleSheet.create({
         width: 240,
         height: 108,
         marginTop: 60
+    },
+    buttonGroup: {
+        flexDirection: 'row',
+        marginBottom: 20,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: 280
+    },
+    buttonWithIcon: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 4
     }
 });

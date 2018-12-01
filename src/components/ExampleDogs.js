@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, StyleSheet, Dimensions } from 'react-native';
+import { ScrollView, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { imageSources } from '../Config';
 import Button from './Button';
 import FastImage from 'react-native-fast-image';
@@ -17,14 +17,16 @@ export default class ExampleDogs extends React.PureComponent<Props> {
 
     _renderItem = (index) => {
         return (
-            <View key={index} style={styles.container}>
-                <FastImage source={imageSources[index]} style={styles.image} />
-                <Button
-                    onPress={() => this._onImagePress(index)}
-                    title={'Use this photo'}
-                    textStyle={styles.buttonText}
-                />
-            </View>
+            <TouchableOpacity onPress={() => this._onImagePress(index)} key={index}>
+                <View style={styles.container}>
+                    <FastImage source={imageSources[index]} style={styles.image} />
+                    <Button
+                        onPress={() => this._onImagePress(index)}
+                        title={'Use this photo'}
+                        textStyle={styles.buttonText}
+                    />
+                </View>
+            </TouchableOpacity>
         );
     };
 

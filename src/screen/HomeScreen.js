@@ -182,8 +182,8 @@ export default class HomeScreen extends React.PureComponent {
             }
         };
 
-        // wait for 3 seconds?
-        setTimeout(randomRequestReview, 3000);
+        // wait for 5 seconds?
+        setTimeout(randomRequestReview, 5000);
     }
 
     render() {

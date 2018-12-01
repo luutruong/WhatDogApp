@@ -29,15 +29,23 @@ export const appStore = Platform.select({
 
 const AdUnitExampleId = 'ca-app-pub-3940256099942544/2934735716';
 
+const adUnitOrExampleId = (adUnit) => {
+    if (__DEV__) {
+        return AdUnitExampleId;
+    }
+
+    return adUnit;
+};
+
 export const AdUnits = Platform.select({
     ios: {
-        HomeScreen: __DEV__ ? AdUnitExampleId : 'ca-app-pub-3634311375738224/7563261727',
-        AnalyzeOverlay: __DEV__ ? AdUnitExampleId : 'ca-app-pub-3634311375738224/6988546654',
-        ResultScreen: __DEV__ ? AdUnitExampleId : 'ca-app-pub-3634311375738224/7918484941'
+        HomeScreen: adUnitOrExampleId('ca-app-pub-3634311375738224/7563261727'),
+        AnalyzeOverlay: adUnitOrExampleId('ca-app-pub-3634311375738224/6988546654'),
+        ResultScreen: adUnitOrExampleId('ca-app-pub-3634311375738224/7918484941')
     },
     android: {
-        HomeScreen: __DEV__ ? AdUnitExampleId : 'ca-app-pub-3634311375738224/5228742425',
-        AnalyzeOverlay: __DEV__ ? AdUnitExampleId : 'ca-app-pub-3634311375738224/2027864010',
-        ResultScreen: __DEV__ ? AdUnitExampleId : 'ca-app-pub-3634311375738224/6220306188'
+        HomeScreen: adUnitOrExampleId('ca-app-pub-3634311375738224/5228742425'),
+        AnalyzeOverlay: adUnitOrExampleId('ca-app-pub-3634311375738224/2027864010'),
+        ResultScreen: adUnitOrExampleId('ca-app-pub-3634311375738224/6220306188')
     }
 });
