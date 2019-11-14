@@ -1,6 +1,6 @@
 {
-  "name": "WhatDog",
-  "version": "0.0.1",
+  "name": "whatdog",
+  "version": "2.0.181203",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
